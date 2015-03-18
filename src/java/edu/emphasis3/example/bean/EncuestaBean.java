@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- *
+ * Ejemplo
  * @author javhur
  */
 @ManagedBean

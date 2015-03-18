@@ -16,11 +16,23 @@
                 </h:column>
                 <h:column>
                     <p:selectOneRadio id="res1" value="#{encuestaBean.response1}">
-                        <f:selectItem itemLabel="MySQL" itemValue="1"/>
-                        <f:selectItem itemLabel="Posgresql" itemValue="2"/>
-                        <f:selectItem itemLabel="Oracle DB" itemValue="3"/>
-                        <f:selectItem itemLabel="MS SQL Server" itemValue="4"/>
-                        <f:selectItem itemLabel="Otra" itemValue="5"/>
+                        <h:panelGrid columns="1">
+                            <h:column>
+                                <f:selectItem itemLabel="MySQL" itemValue="1"/>
+                            </h:column>
+                            <h:column>
+                                <f:selectItem itemLabel="Posgresql" itemValue="2"/>
+                            </h:column>
+                            <h:column>
+                                <f:selectItem itemLabel="Oracle DB" itemValue="3"/>
+                            </h:column>
+                            <h:column>
+                                <f:selectItem itemLabel="MS SQL Server" itemValue="4"/>
+                            </h:column>
+                            <h:column>
+                                <f:selectItem itemLabel="Otra" itemValue="5"/>
+                            </h:column>
+                        </h:panelGrid>
                     </p:selectOneRadio>
                 </h:column>
                 <h:column>
