@@ -1,10 +1,17 @@
 package edu.emphasis3.example.bean;
 
-import edu.emphasis3.example.data.Project;
+import edu.emphasis3.example.data.jpa.Project;
+import edu.emphasis3.example.data.jpa.ProjectJpaController;
+import edu.emphasis3.example.data.jpa.User;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 @ManagedBean
 @SessionScoped
@@ -12,7 +19,9 @@ public class SessionBean implements Serializable {
     private String login;
     private String password;
     private boolean validation = false;
-    private ArrayList<Project> list;
+    private User user;
+
+    
 
     public SessionBean() {
     }
@@ -32,6 +41,14 @@ public class SessionBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public boolean isValidation() {
         return validation;
@@ -41,19 +58,20 @@ public class SessionBean implements Serializable {
         this.validation = validation;
     }
 
-    public ArrayList<Project> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<Project> list) {
-        this.list = list;
-    }
-    
     public String validate() {
         String page;
-        if (login.equals("javhur")) {
-            if (password.equals("123")) {
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("EjemploJsfPU");
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNamedQuery("User.findByLogin");
+        q.setParameter("login", login);
+        List res = q.getResultList();
+        
+        if (!res.isEmpty()) {
+            user = (User)res.get(0);
+            if (password.equals(user.getPassword())) {
                 validation = true;
+                
                 page = "listProjects";
             } else {
                 validation = false;
@@ -63,7 +81,7 @@ public class SessionBean implements Serializable {
             validation = false;
             page = "error";
         }
-        return page;
+        return page+"?faces-redirect=true";
     }
     
 }
